@@ -1,0 +1,19 @@
+{
+  "name": "crawl_film",
+  "version": "1.0.0",
+  "description": "crawl lotte cinema data film",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "crawl",
+    "pupeteer",
+    "crawl-data"
+  ],
+  "author": "voquangluu997",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^8.0.0"
+  }
+}
