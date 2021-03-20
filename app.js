@@ -71,20 +71,20 @@ async function getFilmDetail(url) {
   console.log(films);
 
   await browser.close();
+  return films[0];
 }
 
-getFilmDetail("https://www.galaxycine.vn/en/dat-ve/song-song");
 let filmList = getFilm().then((films) => {
-  x = 0;
-
   let index = 0;
   let length = films.length;
-  function doNext() {
+  let result = [];
+  async function doNext() {
     if (index < length) {
-      console.log(films[index].url);
+      result.push(await getFilmDetail(films[index].url));
+      console.log(result);
     } else clearTimeout(doNext);
     index++;
-    setTimeout(doNext, 3000);
+    setTimeout(doNext, 12000);
   }
 
   doNext();
