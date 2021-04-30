@@ -5,7 +5,7 @@ async function getFilm() {
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
 
-  await page.goto("https://www.galaxycine.vn/en/phim-dang-chieu");
+  await page.goto("https://www.galaxycine.vn/en/phim-sap-chieu");
 
   const films = await page.evaluate(() => {
     let items = document.querySelectorAll(".watchmovie-item");
@@ -102,4 +102,3 @@ let filmList = getFilm().then((films) => {
   doNext();
   return result;
 });
-console.log(r);
