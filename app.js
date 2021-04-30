@@ -1,4 +1,5 @@
 const puppeteer = require("puppeteer");
+let r = [];
 
 async function getFilm() {
   const browser = await puppeteer.launch({ headless: false });
@@ -36,10 +37,20 @@ async function getFilmDetail(url) {
 
   const films = await page.evaluate(() => {
     let item = document.querySelector(".details");
+    let arrTime = document.querySelectorAll(".detail-rating span");
     let links = [];
+
+    let time = "";
+    arrTime.forEach((item) => {
+      if (item.textContent.indexOf("minutes") > -1) {
+        time = item.textContent;
+        return;
+      }
+    });
 
     links.push({
       name: item.querySelector(".detail-title").textContent,
+      time,
       img: document.querySelector(".detail-feat-img img").src,
       rating: item.querySelector(
         ".detail-rating .rating-wrap .rating-movie .rating-value strong"
@@ -54,6 +65,7 @@ async function getFilmDetail(url) {
     });
 
     let detailInfo = item.querySelectorAll(".detail-info-row");
+
     detailInfo.forEach((i) => {
       let attr = i
         .querySelector("label")
@@ -68,8 +80,9 @@ async function getFilmDetail(url) {
     });
     return links;
   });
-  console.log(films);
 
+  console.log(films[0]);
+  r.push(films[0]);
   await browser.close();
   return films[0];
 }
@@ -81,11 +94,12 @@ let filmList = getFilm().then((films) => {
   async function doNext() {
     if (index < length) {
       result.push(await getFilmDetail(films[index].url));
-      console.log(result);
     } else clearTimeout(doNext);
     index++;
-    setTimeout(doNext, 12000);
+    setTimeout(doNext, 5000);
   }
 
   doNext();
+  return result;
 });
+console.log(r);
